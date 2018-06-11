@@ -1,0 +1,30 @@
+img {
+  width: 200px;
+}
+
+.newCompaniesForm {
+  width: 30%;
+  margin: auto;
+}
+
+.newCompanyHeader {
+  text-align: center;
+}
+
+.row {
+  display:flex;
+  flex-wrap:wrap;
+  text-align: center;
+}
+
+/* .card {
+  width: 30%;
+  height: 175px;
+  float: left;
+}
+.card-body {
+  text-align: center;
+}
+p {
+  float: clear;
+}  */

@@ -1,0 +1,27 @@
+<% include partials/header %>
+
+<div class='container'>
+  
+  <header class='jumbotron'>
+    <div class='container'>
+      <h1>Boston Software</h1>
+      <p>Here is our list of roughly the top 100 software employers in the Boston area.</p>
+      <p><a href="/companies/new" class='btn btn-primary btn-large'>Add a company</a></p>
+    </div>
+  </header>
+
+  <div class='row'>
+    <% for(i=0; i < companies.length; i++){ %>
+    <div class='col-md-3 col-sm-6'>
+      <div class='thumbnail'>
+        <img src="<%= companies[i].image %>" alt="<%= companies[i].name %> logo">
+        <div class='caption'>
+          <%= companies[i].name %>
+        </div>
+      </div>
+    </div>
+    <% } %>
+  </div>
+
+</div> <!-- End of container div -->
+<% include partials/footer %>
