@@ -3,7 +3,8 @@ var express    = require('express'),
     bodyParser = require('body-parser'),
     mongoose   = require('mongoose');
 
-mongoose.connect('mongodb://localhost/softwareJobs');
+// mongoose.connect('mongodb://localhost/softwareJobs');
+mongoose.connect('mongodb://test:test123@ds137826.mlab.com:37826/softwarejobs');
 
 // Schema set-up using Mongoose
 var companySchema = new mongoose.Schema({
