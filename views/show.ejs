@@ -4,4 +4,12 @@
 <p> <img src="<%= company.image %>" alt="">  %></p>
 <p><%= company.description %></p>
 
+<% company.comments.forEach(function(foundComment){ %>
+  <p>
+    <strong><%= foundComment.author %></strong> - <%= foundComment.text %>
+  </p>
+<% }); %>
+
+<a href="/companies">Return to companies page</a>
+
 <% include partials/footer %>

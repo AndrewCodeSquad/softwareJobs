@@ -1,19 +1,13 @@
 var express    = require('express'),
     app        = express(),
     bodyParser = require('body-parser'),
-    mongoose   = require('mongoose');
+    mongoose   = require('mongoose'),
+    Company    = require('./models/company.js'),  // .js file extension is optional
+    seedDB     = require('./seeds.js');
 
-// mongoose.connect('mongodb://localhost/softwareJobs');
-mongoose.connect('mongodb://test:test123@ds137826.mlab.com:37826/softwarejobs');
-
-// Schema set-up using Mongoose
-var companySchema = new mongoose.Schema({
-  name: String,
-  image: String,
-  description: String
-});
-
-var Company = mongoose.model('Company', companySchema);
+// seedDB();
+mongoose.connect('mongodb://localhost/softwareJobs');
+// mongoose.connect('mongodb://test:test123@ds137826.mlab.com:37826/softwarejobs');
 
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -55,10 +49,12 @@ app.get('/companies/new', (req, res) => { res.render('newCompany.ejs') });
 
 // SHOW route
 app.get('/companies/:id', (req, res) => { 
-  Company.findById(req.params.id, (err, foundCompany) => {
+  //  .populate() brings comments from other collection to display with Companies vs displaying ID only
+  Company.findById(req.params.id).populate('comments').exec( (err, foundCompany) => {
     if(err){
       console.log('THERE WAS AN ERROR: ' + err)
     } else {
+//       console.log("FOUND COMPANY: " + foundCompany);
       // Render show.ejs with data in foundCompany
       res.render('show', {company: foundCompany});
     }
@@ -66,20 +62,6 @@ app.get('/companies/:id', (req, res) => {
 });
 
 app.listen(3000, () => {console.log('Software Jobs Database Server listening on port 3000!')});
-
-// Company.create(
-//   {
-//     name: "SmartBear Software", 
-//     image: "https://smartbear.com/SmartBear/media/images/smartbear-color-logo-s.png",
-//     description: "Software powers the world. At SmartBear, we know that for every application, there is a software team working hard behind the scenes to keep users happy. We create the software tools that development, testing, and operations teams use to deliver the highest quality and best performing software possible, shipped at seemingly impossible velocities. With products for code review, API and UI level testing, and monitoring across mobile, web and desktop applications, we equip every member of your team with tools to ensure quality at every stage of the software cycle."
-//   }, function (err, company){
-//   if(err){
-//     console.log(err)
-//   } else {
-//     console.log('NEWLY ADDED COMPANY: ');
-//     console.log(company);
-//   }
-// });
 
 // var listOfcompanies = [
 //   { name: "Wayfair", image: "https://d2xsegqaa8s978.cloudfront.net/wayfair_0.0.4_staging/assets/logo.png" },
