@@ -5,7 +5,7 @@ var express    = require('express'),
     Company    = require('./models/company.js'),  // .js file extension is optional
     seedDB     = require('./seeds.js');
 
-// seedDB();
+seedDB();
 mongoose.connect('mongodb://localhost/softwareJobs');
 // mongoose.connect('mongodb://test:test123@ds137826.mlab.com:37826/softwarejobs');
 
@@ -13,8 +13,9 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/css', express.static('css'));
 
+// RESTful Routes
+// READ
 app.get('/', (req, res) => res.render('landing'));
-
 app.get('/companies', (req, res) => { 
   //   Get all companies from the database
   Company.find({}, (err, allCompanies) => {
@@ -61,10 +62,4 @@ app.get('/companies/:id', (req, res) => {
   })
 });
 
-app.listen(3000, () => {console.log('Software Jobs Database Server listening on port 3000!')});
-
-// var listOfcompanies = [
-//   { name: "Wayfair", image: "https://d2xsegqaa8s978.cloudfront.net/wayfair_0.0.4_staging/assets/logo.png" },
-//   { name: "Akamai Technologies", image: "https://www.akamai.com/us/en/multimedia/images/logo/akamai-logo.png" },
-//   { name: "Amwell", image: "https://www.americanwell.com/wp-content/themes/americanwell/assets/images/aw/logo-white.png" }
-// ]
+app.listen(3000, () => {console.log('Software Jobs Web Server listening on port 3000!')});
