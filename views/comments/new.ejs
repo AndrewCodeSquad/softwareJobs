@@ -1,0 +1,15 @@
+<% include ../partials/header %>
+
+<h1 class='newCompanyHeader'>Create a new comment for <%= company.name %></h1>
+
+<div class='row'>
+  <div class='newCompaniesForm'>
+    <form action="/companies/<%= company._id %>/comments" method="POST">
+      <input type='text' placeholder='text' name='comment[text]' class='form-control'>
+      <input type='text' placeholder='author' name='comment[author]' class='form-control'>
+      <button class='btn btn-lg btn-default'>Submit!</button>
+    </form>
+  </div>
+</div>
+
+<% include ../partials/footer %>

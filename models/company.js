@@ -1,3 +1,4 @@
+// require Mongoose
 var mongoose = require('mongoose');
 
 // Schema set-up using Mongoose
@@ -6,6 +7,7 @@ var companySchema = new mongoose.Schema({
   image: String,
   description: String,
   comments: [{
+    //  comments property is an array of Mongo database IDs  
     type: mongoose.Schema.Types.ObjectId,
     ref: "Comment"
   }]

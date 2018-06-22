@@ -2,7 +2,7 @@ var mongoose = require("mongoose"),
     Company  = require("./models/company"),
     Comment  = require("./models/comment");
  
-var data = [
+var seedArray = [
     {
         name: "Athena Health", 
         image: "https://www.athenahealth.com/sites/ahcom/themes/ah_theme/assets/images/logo-color.svg",
@@ -30,38 +30,38 @@ function seedDB(){
    Company.remove({}, function(err){
         if(err){
             console.log(err);
-        }
+        } else
         console.log("removed companies!");
-//         Comment.remove({}, function(err) {
-//             if(err){
-//                 console.log(err);
-//             }
-//             console.log("removed comments!");
+        Comment.remove({}, function(err) {
+            if(err){
+                console.log(err);
+            } else
+            console.log("removed comments!");
              //add a few companies
-            data.forEach(function(seed){
+            seedArray.forEach(function(seed){
                 Company.create(seed, function(err, company){  // data instead of company?
                     if(err){
                         console.log(err)
                     } else {
                         console.log("Added a company");
-//                         //create a comment
-//                         Comment.create(
-//                             {
-//                                 text: "This place is great, but I wish there was internet",
-//                                 author: "Homer"
-//                             }, function(err, comment){
-//                                 if(err){
-//                                     console.log(err);
-//                                 } else {
-//                                     company.comments.push(comment);
-//                                     company.save();
-//                                     console.log("Created new comment");
-//                                 }
-//                             });
+                        //create a comment
+                        Comment.create(
+                            {
+                                text: "This place is great, but I wish they had better coffee",
+                                author: "Homer"
+                            }, function(err, comment){
+                                if(err){
+                                    console.log(err);
+                                } else {
+                                    company.comments.push(comment);
+                                    company.save();
+                                    console.log("Created new comment");
+                                }
+                            });
                     }
                 });
             });
-//         });
+        });
     }); 
 }
  

@@ -1,0 +1,42 @@
+<% include ../partials/header %>
+
+<div class='container'>
+  <div class='row'>
+    <div class='col-md-3'>
+      <p class='lead'><%= company.name %></p>
+      <div class='list-group'>
+        <li class='list-group-item active'>Info 1</li>
+        <li class='list-group-item'>Info 2</li>
+        <li class='list-group-item'>Info 3</li>
+      </div>
+    </div>
+    <div class="col-md-9">
+      <div class="thumbnail">
+        <p style="text-align: center"><img src="<%= company.image %>" alt="<%= company.name %> logo">  %></p>
+        <p style="text-align: left"><%= company.description %></p>
+      </div>
+      <div class="well">
+          <div class="text-right">
+            <a href="/companies/<%= company._id %>/comments/new" class="btn btn-success">Leave a comment</a>
+          </div>
+          <!-- Loop through the array of all comments for this company -->
+          <% company.comments.forEach(function(foundComment){ %>
+            <div class="row">
+              <div class="col-md-12 text-left">
+                <strong><%= foundComment.author %></strong>
+                <span class="pull-right">10 days ago</span>
+                <p>
+                  <%= foundComment.text %>
+                </p>
+              </div>
+            </div>
+              
+        <p style="text-align: left">
+            </p>
+          <% }); %>
+      </div>
+      <a href="/companies" class="btn btn-primary">Return to companies page</a>
+    </div>
+  </div>
+</div>
+<% include ../partials/footer %>
