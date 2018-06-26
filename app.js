@@ -2,17 +2,31 @@ var express    = require('express'),
     app        = express(),
     bodyParser = require('body-parser'),
     mongoose   = require('mongoose'),
+    passport	 = require('passport'),
+    LocalStrategy = require('passport-local'),
     Company    = require('./models/company.js'),  // .js extension is optional here
     Comment    = require('./models/comment.js'),
+    User 			 = require('./models/user.js'),
     seedDB     = require('./seeds.js');
 
-mongoose.connect('mongodb://localhost/softwareJobs');  // local database on CodeAnywhere
-// mongoose.connect('mongodb://test:test123@ds137826.mlab.com:37826/softwarejobs');  // mLab database
+// mongoose.connect('mongodb://localhost/softwareJobs');  // local database on CodeAnywhere
+mongoose.connect('mongodb://test:test123@ds137826.mlab.com:37826/softwarejobs');  // mLab database
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/css', express.static('css'));
 // seedDB();  // seed the database with sample data to aid in initial debugging
 
+// PASSPORT CONFIG
+app.use(require('express-session')({
+	secret: 'CodeSquad grads are the best',
+	resave: false,
+	saveUninitialize: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 // WEBSITE HOME PAGE
 app.get('/', (req, res) => res.render('landing'));
@@ -67,7 +81,7 @@ app.get('/companies/:id', (req, res) => {
 
 // ==================
 //   COMMENT ROUTES
-// ===================
+// ==================
 app.get('/companies/:id/comments/new', (req, res) =>{
   Company.findById(req.params.id, (err, foundCompany) => {
     if(err){
@@ -97,9 +111,19 @@ app.post('/companies/:id/comments', (req, res) => {
       })
     }
   });
+});
 
-  // connect new comment to company
-  // redirect to company show page
+
+// ==================
+//   AUTH ROUTES
+// ==================
+// Show registration form
+app.get('/register', (req, res) => {
+	res.render('register');
+});
+// Save new user to database
+app.post('/register', (req, res) => {
+	res.send('Signing you up');
 });
 
 app.listen(3000, () => {console.log('Software Jobs Web Server listening on port 3000!')});
