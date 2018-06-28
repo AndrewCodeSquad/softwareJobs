@@ -12,9 +12,13 @@
       </div>
       <div class="collapse navbar-collapse">  <!-- Begin right-hand side of navbar -->
         <ul class="nav navbar-nav navbar-right">
-          <li><a href="/">Login</a></li>
-          <li><a href="/">Sign up</a></li>
-          <li><a href="/">Logout</a></li>
+          <% if(!currentUser){ %> <!-- if user is undefined, show "Login" & "Sign up"-->
+            <li><a href="/login">Login</a></li>
+            <li><a href="/register">Sign up</a></li>
+          <% } else { %> <!-- if there is a user, just show "Logout" --> 
+            <li><a href="">Signed in as <strong><%= currentUser.username %></strong></a></li>
+            <li><a href="/logout">Logout</a></li>
+          <% } %>
         </ul>
       </div>  <!-- End right-hand side of navbar -->
     </div>  <!-- End of container-fluid -->
